@@ -19,14 +19,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.0' # Versão estável recente
+      # REMOVIDO: O passo "Setup Flutter" manual. 
+      # Motivo: O Flet quer gerenciar a versão sozinho, então deixaremos ele baixar a que precisa.
 
-      - name: Build APK
-        # Ajuste "main.py" abaixo para o nome do seu arquivo principal
-        run: flet build apk main.py 
+      - name: Build APK with Auto-Confirm
+        # O comando "yes |" serve para aceitar automaticamente a instalação do SDK
+        run: yes | flet build apk main.py 
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
