@@ -19,13 +19,17 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # REMOVIDO: O passo "Setup Flutter" manual. 
-      # Motivo: O Flet quer gerenciar a versão sozinho, então deixaremos ele baixar a que precisa.
+      # ESTE PASSO VAI MOSTRAR NO LOG QUAIS ARQUIVOS ESTÃO LÁ
+      - name: Debug - List files
+        run: |
+          echo "Listando arquivos na raiz:"
+          ls -la
 
-      - name: Build APK with Auto-Confirm
-        # O comando "yes |" serve para aceitar automaticamente a instalação do SDK
-        run: yes | flet build apk main.py 
-
+      - name: Build APK
+        # O ponto "." no final diz para usar o diretório atual
+        # O "yes" aceita as licenças do Android SDK automaticamente
+        run: yes | flet build apk . --verbose
+      
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
